@@ -10,7 +10,6 @@ class ResultPrinter
     while counter <=7 do # в цикле прочитаем 7 файлов и запишем из содержимое в массив
       # изображения виселиц лежат в папке /image/ в файлах 0.txt, 1.txt, 2.txt и т. д.
       file_name = current_path + "/../image/#{counter}.txt"
-
       begin
         f = File.new(file_name, "r:UTF-8") # вторым параметром явно указываем на кодировку файла
         @status_image << f.read # добавляем все содержимое файла в массив
@@ -33,6 +32,7 @@ class ResultPrinter
 # который нужно передать в качестве параметра
   def print_status(game)
     cls
+    puts "Игра 'В И С Е Л И Ц А'"
     puts "\nСлово: #{get_word_for_print(game.letters, game.good_letters)}"
     puts "\nОшибки: #{game.bad_letters.join(", ")}"
     # метод join возвращает элементы массива, объединенные в строку, с заданным разделителем
@@ -44,7 +44,7 @@ class ResultPrinter
       puts "Загаданное слово было: " + game.letters.join("")
       puts
     elsif game.status == 1
-      puts "Поздравляем, вы выиграли!\n\n"
+      puts "Поздравляем, Вы выиграли!\n\n"
     else
       puts "У вас осталось ошибок: " + (7 - game.errors).to_s
     end
