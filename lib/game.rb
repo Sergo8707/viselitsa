@@ -54,11 +54,15 @@ class Game
       return
     end
 
-    if @letters.include? bukva # если в слове есть буква
+    if letters.include?(bukva) ||
+        (bukva == "Е" && letters.include?("Ё")) ||
+        (bukva == "Ё" && letters.include?("Е")) ||
+        (bukva == "И" && letters.include?("Й")) ||
+        (bukva == "Й" && letters.include?("И")) # если в слове есть буква
       @good_letters << bukva # запишу её в число "правильных" буква
 
       # дополнительная проверка - угадано ли на этой букве все слово целиком
-      if @good_letters.uniq.sort == @letters.uniq.sort
+      if good_letters.uniq.sort == letters.uniq.sort
         @status = 1 # статус - победа
       end
 
@@ -85,21 +89,19 @@ class Game
       validator = Validator.new
 
       until validator.check_letter?(letter) do
-
         letter = UnicodeUtils.upcase(STDIN.gets.encode("UTF-8").chomp) # регистр букв
-
         # проверка для букв е, ё
         if letter == "Ё" && @letters.include?("Е")
-          letter = "Е"
+          next_step("Е")
         elsif letter == "Е" && @letters.include?("Ё")
-          letter = "Ё"
+          next_step("Ё")
         end
 
         # проверка для букв и, й
         if letter == "Й" && @letters.include?("И")
-          letter = "И"
+          next_step("И")
         elsif letter == "И" && @letters.include?("Й")
-          letter = "Й"
+          next_step("Й")
         end
       end
     end
